@@ -5,6 +5,10 @@ describe('Unit testing SearchController', function() {
 
     var $controller, $window, $document, $httpBackend, $rootScope;
     var scope, controller;
+    var searchURL =
+            '/angular/reverse/?djng_url_name=icommons_rest_api_proxy&djng_url_args' +
+            '=api%2Fcourse%2Fv2%2Fcourse_instances&exclude_from_isites=0&search=65153' +
+            '&school=colgsas&offset=0&limit=10&ordering=title';
 
     beforeEach(inject(function(_$controller_, _$window_, _$document_, _$httpBackend_, _$rootScope_) {
         // The injector unwraps the underscores (_) from around
@@ -81,8 +85,35 @@ describe('Unit testing SearchController', function() {
     });
 
     describe('$scope.initializeDatatable()', function() {
+        var searchResults = {
+            results: [{
+                course: {
+                    registrar_code: 'REGCODE',
+                    school_id: 'xyz',
+                    course_id: '789',
+                },
+                course_instance_id: '12345',
+            }],
+        };
+        beforeEach(function() {
+            scope.searchInProgress = true;
+        });
 
-    });
+        xit('should make the api call to fetch data ', function () {
+
+            //make the ajax call
+            $httpBackend.expectGET(searchURL)
+                .respond(200, JSON.stringify(searchResults));
+            $httpBackend.flush(1);
+        });
+
+        it('should  initialize  data table with results');
+
+        it('should not include  excluded_from_isites records');
+
+        it('should handle errors');
+
+     });
 
     describe('$scope.searchCourseInstances()', function() {
 
