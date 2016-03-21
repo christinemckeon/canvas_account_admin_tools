@@ -20,6 +20,8 @@ class Locators(object):
     @classmethod
     def COURSE_LINK_HREF_CSS(cls, cid):
         """ returns a locator for a course detail link in the course table """
+
+        #TODO: Change link to Course Details, not going to People page
         return By.CSS_SELECTOR, 'a[href="#/people/{}"]'.format(cid)
 
 
@@ -79,5 +81,8 @@ class CourseSearchPageObject(CourseInfoBasePageObject):
         else:
             raise RuntimeError('select_course() requires cid or title')
         # loading the results can take a long time, so explicitly wait longer
+
+        #TODO: change reference from Add People to Course Details
+
         WebDriverWait(self._driver, 30).until(lambda s: s.find_element(
             *CoursePeoplePageLocators.ADD_PEOPLE_BUTTON).is_displayed())
